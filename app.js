@@ -30,7 +30,9 @@ app.use(cors({
   ],
   credentials: true,
   exposedHeaders: ["set-cookie"],
+  allowedHeaders: ['Content-Type', 'Authorization']
 }));
+
 app.use(helmet());
 app.use(bodyParser.json());
 
