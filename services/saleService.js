@@ -1,5 +1,3 @@
-const { Sale } = require('../models/Sale');
-
 class SaleService {
     static async getAll(userId) {
         return await Sale.find({ userId }).sort({ date: -1 });
@@ -63,6 +61,19 @@ class SaleService {
 
     static async delete(id, userId) {
         return await Sale.findOneAndDelete({ _id: id, userId });
+    }
+
+    static async getSalesAnalytics(userId) {
+        try {
+            const sales = await Sale.find({ userId });
+            // Calculer les statistiques nécessaires à partir des ventes
+            const totalDays = sales.length ? (new Date() - new Date(sales[sales.length - 1].date)) / (1000 * 60 * 60 * 24) : 0;
+            const conversionRate = sales.length ? sales.filter(sale => sale.paymentStatus === 'Effectué').length / sales.length : 0;
+            return { totalDays, conversionRate };
+        } catch (error) {
+            console.error('Error in SaleService.getSalesAnalytics:', error);
+            throw error;
+        }
     }
 }
 
