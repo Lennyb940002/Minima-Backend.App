@@ -1,19 +1,19 @@
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-var cors = require('cors');
-var bodyParser = require('body-parser');
-var dotenv = require('dotenv');
-var helmet = require('helmet');
-var rateLimit = require('express-rate-limit');
-var { connectDB } = require('./db');
-var { authRouter } = require('./routes/authRoutes');
-var { saleRouter } = require('./routes/saleRoutes');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
+const cors = require('cors');
+const bodyParser = require('body-parser');
+const dotenv = require('dotenv');
+const helmet = require('helmet');
+const rateLimit = require('express-rate-limit');
+const { connectDB } = require('./db');
+const { authRouter } = require('./routes/authRoutes');
+const { saleRouter } = require('./routes/saleRoutes');
 
 dotenv.config();
 
-var app = express();
+const app = express();
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -38,7 +38,7 @@ app.use(bodyParser.json());
 
 connectDB();
 
-var limiter = rateLimit({
+const limiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 100,
   message: 'Too many requests from this IP, please try again later.'
