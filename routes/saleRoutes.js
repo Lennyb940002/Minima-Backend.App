@@ -63,4 +63,13 @@ saleRouter.delete('/:id', async (req, res) => {
     }
 });
 
+saleRouter.get('/analytics', async (req, res) => {
+    try {
+        const analytics = await SaleService.getSalesAnalytics(req.user.userId);
+        res.json(analytics);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
 module.exports = { saleRouter };
